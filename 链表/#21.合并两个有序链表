@@ -1,0 +1,42 @@
+/*
+将两个升序链表合并为一个新的 升序 链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。
+*/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ * int val;
+ * ListNode next;
+ * ListNode() {}
+ * ListNode(int val) { this.val = val; }
+ * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        if(list1==null||list2==null){
+            return list1==null?list2:list1;//若有一个链表为空则直接返回另一个链表
+        }
+        // 两个链表的头的val谁最小,谁做合并后的链表头
+        ListNode head = list1.val < list2.val ? list1 : list2;
+        ListNode cur1 = head == list1 ? list1.next : list2.next;// cur1指向小链表的头之后
+        ListNode cur2 = head == list1 ? list2 : list1;// cur2 指向另一个链表头
+        ListNode cur=head;//工作指针
+        while (cur1 != null && cur2 != null) {
+            if (cur1.val < cur2.val) {//对比两个链表的cur确定合并链表的cur.next的指向,然后对应链表的cur前进,合并链表的cur前进
+                cur.next = cur1;   
+                cur1 = cur1.next;  
+            } else {
+                cur.next = cur2;
+                cur2 = cur2.next;
+            }
+            cur=cur.next;
+        }
+      //结束之后 判断哪个链表为空 cur.next指向另一个不空的链表(可能两个都空但是不影响
+        if (cur1 == null) {
+            cur.next=cur2;
+        }else{
+            cur.next=cur1;
+        }
+        return head;
+    }
+}
