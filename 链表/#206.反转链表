@@ -1,0 +1,25 @@
+/*
+给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
+*/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+ class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode pre=null,cur=head;//pre cur next 上一个 当前 下一个的相对位置关系 
+        while(cur!=null){
+            ListNode next=cur.next;//右移
+            cur.next=pre;//翻转
+            pre=cur;//右移
+            cur=next;//右移
+        }
+        return pre;
+    }
+}
