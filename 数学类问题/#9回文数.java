@@ -13,9 +13,9 @@ class Solution {
         }
         int num=0;
         while(x>num){//x<=num时说明有一半数据被处理 即可跳出循环
-            int ge=x%10;
-            num=num*10+ge;
-            x=x/10;
+            int ge=x%10;//获取低位
+            num=num*10+ge;//num得到低位 放到高位
+            x=x/10;//x降低位
         }
         return x==num||x==num/10;
     }
