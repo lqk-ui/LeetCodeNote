@@ -1,0 +1,50 @@
+/*
+给你一个链表的头节点 head 和一个特定值 x ，请你对链表进行分隔，使得所有 小于 x 的节点都出现在 大于或等于 x 的节点之前。
+
+你应当 保留 两个分区中每个节点的初始相对位置。
+*/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ * int val;
+ * ListNode next;
+ * ListNode() {}
+ * ListNode(int val) { this.val = val; }
+ * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode partition(ListNode head, int x) {
+        ListNode leftHead = null, leftTail = null;
+        ListNode rightHead = null, rightTail = null;
+        ListNode next;
+        while (head != null) {// 工作指针遍历整个链表 大的放大区 小的放小区
+            next = head.next;
+            head.next = null;
+            // 避免head被加到大/小区链表后他们还能引用主链表
+            // 如果不加这行代码断开连接,会导致rightTail.next = head;或
+            // leftTail.next = head;自己指自己
+            if (head.val >= x) {
+                if (rightHead == null) {// 大区若为空 头尾皆指向工作指针
+                    rightHead = head;
+                } else { // 大区不空 尾部指向工作指针 更新尾部
+                    rightTail.next = head;
+                }
+                rightTail = head;
+            } else {
+                if (leftHead == null) {
+                    leftHead = head;
+                } else {
+                    leftTail.next = head;
+                }
+                leftTail = head;
+            }
+            head = next;
+        }
+        if (leftHead == null) {
+            return rightHead;
+        }
+        leftTail.next = rightHead;
+        return leftHead;
+    }
+}
