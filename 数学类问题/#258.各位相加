@@ -1,0 +1,23 @@
+/*
+给定一个非负整数 num，反复将各个位上的数字相加，直到结果为一位数。返回这个结果。
+*/
+class Solution {
+    public int addDigits(int num) {
+        // sum==38
+        do {
+            num = getAddres(num);// 获取当前数和 sum==3+8==11
+        } while (num > 9); // 如果这个数>9,再对这个数求和
+        // 再调一次获取当前所有位之和
+        return num;
+    }
+
+    public int getAddres(int num) {
+        int sum = 0;
+        while (num != 0) {
+            int ge = num % 10;// 8 3
+            sum = sum + ge;// 8 8+3
+            num = num / 10;// 3 0
+        }
+        return sum;// 11
+    }
+}
